@@ -2,13 +2,6 @@ import { test as base } from "@playwright/test";
 import LoginPage from "../pages/login.page";
 import TodoPage from "../pages/todo.page";
 
-// export const test = base.extend<{
-    // loginPage: LoginPage;
-    // todoPage: TodoPage;
-    // tryLogin: LoginPage;
-// }>({
-// });
-
 type Fixtures = {
     loginPage: LoginPage;
     todoPage: TodoPage;

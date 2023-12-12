@@ -1,4 +1,3 @@
-import { log } from "console";
 import { test } from "./fixtures/basePage";
 
 test('Login test', async ({

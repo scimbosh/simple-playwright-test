@@ -1,16 +1,13 @@
 import { expect } from "@playwright/test";
 import { test } from "./fixtures/basePage";
 
-
-
 var todoText = "";
 const content = [
     "test1",
-    "1242356",
+    "test2",
 ]
 
 test.afterEach(async ({ page, simpleDBClient }, testInfo) => {
-
     //Clear data base after test
     await simpleDBClient.query(`delete from todos where content = '${todoText}'`);
     const createdTodo = await simpleDBClient.query(`select * from todos where content = '${todoText}'`)

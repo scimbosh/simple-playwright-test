@@ -2,7 +2,6 @@ import { test as base } from "@playwright/test";
 import LoginPage from "../pages/login.page";
 import TodoPage from "../pages/todo.page";
 import  SimpleDBClient  from "../utils/simpleDBClient";
-import { connect } from "http2";
 
 type Fixtures = {
     loginPage: LoginPage;
@@ -13,6 +12,7 @@ type Fixtures = {
 
 export const test = base.extend<Fixtures>({
 
+    //pages
     loginPage: async ({ page }, use) => {
         await use(new LoginPage(page));
     },
@@ -21,6 +21,7 @@ export const test = base.extend<Fixtures>({
         await use(new TodoPage(page));
     },
 
+    //prepare environment preparation
     tryLogin: async ({ page }, use) => {
         const loginPage = new LoginPage(page)
         await loginPage.goto();
@@ -29,6 +30,7 @@ export const test = base.extend<Fixtures>({
         await use(loginPage);
     },
 
+    //utils
     simpleDBClient: async ({  }, use) => {
         const client = new SimpleDBClient()
         await client.connect()

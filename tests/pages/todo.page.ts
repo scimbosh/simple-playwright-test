@@ -39,7 +39,6 @@ export default class TodoPage {
 
     public async assertTodoCreated(text: string) {
         await expect(this.todoItems().filter({ hasText: text })).toBeVisible
-        //await this.checkboxInItems(text).click()
     }
 
 }

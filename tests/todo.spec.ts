@@ -14,23 +14,23 @@ test.afterEach(async ({ page, simpleDBClient }, testInfo) => {
     console.log(createdTodo.rows)
 });
 
+test.describe.parallel(async () => {
+    for (const text of content) {
+        test(`Create todo. Param: ${text}`, async ({
+            tryLogin,
+            todoPage,
+            simpleDBClient
+        }) => {
+            todoText = text
+            await todoPage.createToDo(todoText)
+            await todoPage.assertTodoCreated(todoText)
 
-for (const text of content) {
-    test(`Create todo. Param: ${text}`, async ({
-        tryLogin,
-        todoPage,
-        simpleDBClient
-    }) => {
-        todoText = text
-        await todoPage.createToDo(todoText)
-        await todoPage.assertTodoCreated(todoText)
+            await expect(async () => {
+                const createdTodo = await simpleDBClient.query(`select * from todos where content = '${todoText}'`)
+                expect(createdTodo.rows.length).toBeGreaterThan(0)
+            }).toPass({ timeout: 3000 });
 
-        await expect(async () => {
-            const createdTodo = await simpleDBClient.query(`select * from todos where content = '${todoText}'`)
-            expect(createdTodo.rows.length).toBeGreaterThan(0)
-        }).toPass({timeout: 3000});
+        });
 
-    });
-
-}
-
+    }
+});

@@ -16,7 +16,6 @@ export default class SimpleDBClient {
         await client.connect();
     }
 
-
     async query(queryString: string): Promise<any> {
         return await client.query(queryString);
     }

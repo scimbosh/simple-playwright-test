@@ -7,9 +7,15 @@ export default class LoginPage {
         this.page = page;
     }
 
+    //Selectors
     loginInput = () => this.page.getByPlaceholder('LOGIN');
     passwordInput = () => this.page.getByPlaceholder('PASSWORD');
     enterButton = () => this.page.getByText('ENTER');
+
+    //Actions
+    public async goto() {
+        await this.page.goto("http://localhost:4200")
+    }
 
     public async fillAuthData(login: string, password: string) {
         await this.loginInput().fill(login)
@@ -18,10 +24,6 @@ export default class LoginPage {
 
     public async pressEnterButton() {
         await this.enterButton().click()
-    }
-
-    public async goto() {
-        await this.page.goto("http://localhost:4200")
     }
 
 }

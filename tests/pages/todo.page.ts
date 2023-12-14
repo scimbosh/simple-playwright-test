@@ -7,6 +7,7 @@ export default class TodoPage {
         this.page = page;
     }
 
+    //Selectors
     heading = () => this.page.locator('h1');
     todoInput = () => this.page.getByPlaceholder('Add a new todo content ');
     addButton = () => this.page.getByText('ADD');
@@ -14,7 +15,7 @@ export default class TodoPage {
     checkboxInItems = (text: string): Locator =>
         this.page.locator(`//*[(./span[text() = "${text}"])]/input[@type="checkbox"]`);
 
-
+    //Actions
     public async goto() {
         await this.page.goto("http://localhost:4200/todo")
     }

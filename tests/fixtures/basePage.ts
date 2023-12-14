@@ -34,7 +34,7 @@ export const test = base.extend<Fixtures>({
     simpleDBClient: async ({ }, use) => {
         const client = new SimpleDBClient()
         await client.connect()
-        await use(new SimpleDBClient());
+        await use(client);
     },
 
 

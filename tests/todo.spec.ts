@@ -1,5 +1,7 @@
 import { expect } from "@playwright/test";
 import { test } from "./fixtures/basePage";
+import { allure } from "allure-playwright";
+import { Severity } from "allure-js-commons";
 
 var todoText = "";
 const content = [
@@ -8,9 +10,11 @@ const content = [
 ]
 
 test.afterEach(async ({ page, simpleDBClient }, testInfo) => {
-    //Clear data base after test
-    await simpleDBClient.query(`delete from todos where content = '${todoText}'`);
-    const createdTodo = await simpleDBClient.query(`select * from todos where content = '${todoText}'`)
+    await allure.step(`Clear data base after test`, async () => {
+        await simpleDBClient.query(`delete from todos where content = '${todoText}'`);
+        const createdTodo = await simpleDBClient.query(`select * from todos where content = '${todoText}'`)
+    });
+
 });
 
 test.describe.parallel(async () => {
@@ -20,14 +24,25 @@ test.describe.parallel(async () => {
             todoPage,
             simpleDBClient
         }) => {
+            await allure.parentSuite("WebUI test");
+            await allure.suite("Playwright");
+            await allure.subSuite("TodoPage");
+            await allure.severity(Severity.CRITICAL);
+            await allure.owner("scimbosh");
+            await allure.tags("positive", "todo-page");
+            await allure.id("2")
+            await allure.description("Test of creating a note via the web and checking the creation of a record in the database");
+            await allure.parameter("text of todo", text);
+
             todoText = text
             await todoPage.createToDo(todoText)
             await todoPage.assertTodoCreated(todoText)
-
-            await expect(async () => {
-                const createdTodo = await simpleDBClient.query(`select * from todos where content = '${todoText}'`)
-                expect(createdTodo.rows.length).toBeGreaterThan(0)
-            }).toPass({ timeout: 3000 });
+            await allure.step(`Checking the creation of a record in the database`, async () => {
+                await expect(async () => {
+                    const createdTodo = await simpleDBClient.query(`select * from todos where content = '${todoText}'`)
+                    expect(createdTodo.rows.length).toBeGreaterThan(0)
+                }).toPass({ timeout: 3000 });
+            });
 
         });
 

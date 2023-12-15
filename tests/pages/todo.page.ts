@@ -1,4 +1,5 @@
 import { expect, Locator, Page } from "@playwright/test";
+import { allure } from "allure-playwright"
 
 export default class TodoPage {
     page: Page;
@@ -17,29 +18,41 @@ export default class TodoPage {
 
     //Actions
     public async goto() {
-        await this.page.goto(`${process.env.URL}/todo`)
+        await allure.step(`Open page ${process.env.URL}/todo`, async () => {
+            await this.page.goto(`${process.env.URL}/todo`)
+        });
     }
 
     public async pressAddButton() {
-        await this.addButton().click();
-
+        await allure.step("Сlick on the add button", async () => {
+            await this.addButton().click();
+        });
     }
 
     public async fullTodo(text: string) {
-        await this.todoInput().fill(text);
+        await allure.step("Fill in the text", async () => {
+            await this.todoInput().fill(text);
+        });
     }
 
     public async createToDo(text: string) {
-        await this.fullTodo(text);
-        await this.pressAddButton();
+        await allure.step("Create todo", async () => {
+            await this.fullTodo(text);
+            await this.pressAddButton();
+        });
     }
 
     public async assertTodoPageOpened() {
-        await expect(this.heading()).toBeVisible();
+        await allure.step("Check that the TODO page is open", async () => {
+            await expect(this.heading()).toBeVisible();
+        });
+
     }
 
     public async assertTodoCreated(text: string) {
-        await expect(this.todoItems().filter({ hasText: text })).toBeVisible
+        await allure.step("Check that the note has been created", async () => {
+            await expect(this.todoItems().filter({ hasText: text })).toBeVisible
+        });   
     }
 
 }

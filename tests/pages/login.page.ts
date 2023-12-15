@@ -1,4 +1,5 @@
 import { Page } from "@playwright/test";
+import { allure } from "allure-playwright";
 
 export default class LoginPage {
     page: Page;
@@ -14,16 +15,22 @@ export default class LoginPage {
 
     //Actions
     public async goto() {
-        await this.page.goto(`${process.env.URL}`)
+        await allure.step(`Open ${process.env.URL}`, async () => {
+            await this.page.goto(`${process.env.URL}`)
+        });
     }
 
     public async fillAuthData(login: string, password: string) {
-        await this.loginInput().fill(login)
-        await this.passwordInput().fill(password)
+        await allure.step(`Fill in the login and password fields`, async () => {
+            await this.loginInput().fill(login)
+            await this.passwordInput().fill(password)
+        });
     }
 
     public async pressEnterButton() {
-        await this.enterButton().click()
+        await allure.step(`Click on the Enter button`, async () => {
+            await this.enterButton().click()
+        });
     }
 
 }

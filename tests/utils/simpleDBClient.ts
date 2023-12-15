@@ -6,11 +6,11 @@ export default class SimpleDBClient {
 
     async connect() {
         const connectionSettings =  {
-            host: "localhost",
-            user: "postgres",
-            port: 5432, //Please insert your valid port form your PostgreSQL DB
-            password: "postgres", // Your password
-            database: "restserverfortest" // Your name of database
+            host: `${process.env.DB_HOST}`,
+            user: `${process.env.DB_USER}`,
+            port: `${process.env.DB_PORT}`,
+            password: `${process.env.DB_PASSWORD}`,
+            database: `${process.env.DB_NAME}` 
         }
         client = await new Client(connectionSettings);
         await client.connect();

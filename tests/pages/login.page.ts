@@ -14,7 +14,7 @@ export default class LoginPage {
 
     //Actions
     public async goto() {
-        await this.page.goto("http://localhost:4200")
+        await this.page.goto(`${process.env.URL}`)
     }
 
     public async fillAuthData(login: string, password: string) {

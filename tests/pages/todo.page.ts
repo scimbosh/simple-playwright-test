@@ -17,7 +17,7 @@ export default class TodoPage {
 
     //Actions
     public async goto() {
-        await this.page.goto("http://localhost:4200/todo")
+        await this.page.goto(`${process.env.URL}/todo`)
     }
 
     public async pressAddButton() {

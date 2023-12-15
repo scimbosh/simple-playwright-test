@@ -5,7 +5,7 @@ test('Login test', async ({
     todoPage
 }) => {
     await loginPage.goto();
-    await loginPage.fillAuthData('user', 'password')
+    await loginPage.fillAuthData(`${process.env.APP_USER_NAME}`, `${process.env.APP_USER_PASSWORD}`)
     await loginPage.pressEnterButton()
     await todoPage.assertTodoPageOpened()
 });

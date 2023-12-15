@@ -25,7 +25,7 @@ export const test = base.extend<Fixtures>({
     tryLogin: async ({ page }, use) => {
         const loginPage = new LoginPage(page)
         await loginPage.goto();
-        await loginPage.fillAuthData('user', 'password')
+        await loginPage.fillAuthData(`${process.env.APP_USER_NAME}`, `${process.env.APP_USER_PASSWORD}`)
         await loginPage.pressEnterButton()
         await use(loginPage);
     },

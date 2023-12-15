@@ -11,7 +11,6 @@ test.afterEach(async ({ page, simpleDBClient }, testInfo) => {
     //Clear data base after test
     await simpleDBClient.query(`delete from todos where content = '${todoText}'`);
     const createdTodo = await simpleDBClient.query(`select * from todos where content = '${todoText}'`)
-    console.log(createdTodo.rows)
 });
 
 test.describe.parallel(async () => {
